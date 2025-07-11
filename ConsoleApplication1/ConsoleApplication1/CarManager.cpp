@@ -150,18 +150,25 @@ void CarManager::searchCars() const {
     cout << "Введіть марку (або залиште порожнім): ";
     cin.ignore();
     getline(cin, brandFilter);
+
     cout << "Введіть колір (або залиште порожнім): ";
     getline(cin, colorFilter);
+
     cout << "Введіть рік (або 0 для пропуску): ";
     cin >> yearFilter;
 
+    // Приводимо фільтри до нижнього регістру
+    brandFilter = toLower(brandFilter);
+    colorFilter = toLower(colorFilter);
+
     bool found = false;
     for (const auto& car : cars) {
+        string carStr = toLower(car->toCSV());
         bool matches = true;
 
-        if (!brandFilter.empty() && car->toCSV().find(brandFilter) == string::npos)
+        if (!brandFilter.empty() && carStr.find(brandFilter) == string::npos)
             matches = false;
-        if (!colorFilter.empty() && car->toCSV().find(colorFilter) == string::npos)
+        if (!colorFilter.empty() && carStr.find(colorFilter) == string::npos)
             matches = false;
         if (yearFilter != 0 && car->getYear() != yearFilter)
             matches = false;
@@ -175,3 +182,4 @@ void CarManager::searchCars() const {
     if (!found)
         cout << "Нічого не знайдено за заданими критеріями.\n";
 }
+
