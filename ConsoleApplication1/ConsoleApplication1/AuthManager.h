@@ -12,6 +12,7 @@ private:
     const string filename = "users.txt";
     int deleteAttempts = 0;
 
+
 public:
     AuthManager();
 
@@ -20,6 +21,7 @@ public:
 
     bool login();
     bool isAdmin() const;
+    bool reauthenticate();
     string getCurrentUser() const;
 
     // admin-only

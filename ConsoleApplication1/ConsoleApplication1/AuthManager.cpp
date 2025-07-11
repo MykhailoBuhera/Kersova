@@ -125,3 +125,8 @@ void AuthManager::listUsers() {
     }
 
 }
+bool AuthManager::reauthenticate() {
+    cout << "\n--- Зміна користувача ---\n";
+    return login(); // Просто викликає login() знову
+}
+
