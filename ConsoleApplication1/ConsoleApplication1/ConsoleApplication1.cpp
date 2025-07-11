@@ -45,26 +45,30 @@ int main() {
             }
             else {
             car_menu:
-                cout << "\n--- Меню авто ---\n";
                 cout << "1. Переглянути всі авто\n";
                 cout << "2. Додати нове авто\n";
                 cout << "3. Найекономічніше авто\n";
-                cout << "4. Середня ціна за період\n";
-                cout << "5. Змінити користувача\n";
-                cout << "6. Вийти з програми\n";
+                cout << "4. Середня ціна у періоді\n";
+                cout << "5. Редагувати авто\n";         
+                cout << "6. Видалити авто\n";           
+                cout << "7. Змінити користувача\n";
+                cout << "8. Вийти з програми\n";
                 cout << "Ваш вибір: ";
                 int choice;
                 cin >> choice;
 
+            
                 switch (choice) {
-                case 1: manager.showAllCars(); break;
-                case 2: manager.addCar(); break;
-                case 3: manager.findMostEconomicalCar(); break;
-                case 4: manager.averagePriceInPeriod(); break;
-                case 5: activeSession = false; break;
-                case 6: manager.saveToFile("cars.csv"); return 0;
-                default: cout << "Невірний вибір.\n"; break;
-                }
+                    case 1: manager.showAllCars(); break;
+                    case 2: manager.addCar(); break;
+                    case 3: manager.findMostEconomicalCar(); break;
+                    case 4: manager.averagePriceInPeriod(); break;
+                    case 5: manager.editCar(); break;  
+                    case 6: manager.deleteCar(); break;   
+                    case 7: activeSession = false; break;
+                    case 8: manager.saveToFile("cars.csv"); return 0;
+                    default: cout << "Невірний вибір.\n"; break;
+                } 
             }
         }
     }

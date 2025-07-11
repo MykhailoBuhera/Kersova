@@ -18,6 +18,9 @@ public:
     void showAllCars() const;
     void findMostEconomicalCar() const;
     void averagePriceInPeriod() const;
+    void editCar();
+    void deleteCar();
+
 };
 
 #endif

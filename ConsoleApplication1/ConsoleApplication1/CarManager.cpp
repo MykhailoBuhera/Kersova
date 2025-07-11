@@ -79,3 +79,55 @@ void CarManager::averagePriceInPeriod() const {
     else
         cout << "Середня ціна: " << (sum / count) << " грн\n";
 }
+void CarManager::editCar() {
+    if (cars.empty()) {
+        cout << "Список порожній.\n";
+        return;
+    }
+
+    int index;
+    showAllCars(); // показати всі
+    cout << "\nВведіть індекс авто для редагування (0..." << cars.size() - 1 << "): ";
+    cin >> index;
+
+    if (index < 0 || index >= cars.size()) {
+        cout << "Неправильний індекс.\n";
+        return;
+    }
+
+    string brand, color;
+    double fuel;
+    int doors, year;
+    double price;
+
+    cout << "\n--- Редагування авто ---\n";
+    cout << "Нова марка: "; cin >> brand;
+    cout << "Новий колір: "; cin >> color;
+    cout << "Нові витрати бензину: "; cin >> fuel;
+    cout << "Нова кількість дверей: "; cin >> doors;
+    cout << "Новий рік: "; cin >> year;
+    cout << "Нова ціна: "; cin >> price;
+
+    cars[index] = make_shared<Car>(brand, color, fuel, doors, year, price);
+    cout << "Авто оновлено.\n";
+}
+
+void CarManager::deleteCar() {
+    if (cars.empty()) {
+        cout << "Список порожній.\n";
+        return;
+    }
+
+    int index;
+    showAllCars();
+    cout << "\nВведіть індекс авто для видалення (0..." << cars.size() - 1 << "): ";
+    cin >> index;
+
+    if (index < 0 || index >= cars.size()) {
+        cout << "Неправильний індекс.\n";
+        return;
+    }
+
+    cars.erase(cars.begin() + index);
+    cout << "Авто видалено.\n";
+}
