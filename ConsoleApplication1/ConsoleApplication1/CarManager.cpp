@@ -3,9 +3,15 @@
 #include <iostream>
 #include <limits>
 #include <algorithm>
-
+#include <cctype>// for lower
 using namespace std;
 
+string toLower(const string& str) {
+    string result = str;
+    transform(result.begin(), result.end(), result.begin(),
+        [](unsigned char c) { return tolower(c); });
+    return result;
+}
 void CarManager::loadFromFile(const string& filename) {
     ifstream file(filename);
     string line;
@@ -130,4 +136,42 @@ void CarManager::deleteCar() {
 
     cars.erase(cars.begin() + index);
     cout << "Авто видалено.\n";
+}
+void CarManager::searchCars() const {
+    if (cars.empty()) {
+        cout << "База порожня.\n";
+        return;
+    }
+
+    string brandFilter, colorFilter;
+    int yearFilter = 0;
+
+    cout << "\n--- Пошук авто ---\n";
+    cout << "Введіть марку (або залиште порожнім): ";
+    cin.ignore();
+    getline(cin, brandFilter);
+    cout << "Введіть колір (або залиште порожнім): ";
+    getline(cin, colorFilter);
+    cout << "Введіть рік (або 0 для пропуску): ";
+    cin >> yearFilter;
+
+    bool found = false;
+    for (const auto& car : cars) {
+        bool matches = true;
+
+        if (!brandFilter.empty() && car->toCSV().find(brandFilter) == string::npos)
+            matches = false;
+        if (!colorFilter.empty() && car->toCSV().find(colorFilter) == string::npos)
+            matches = false;
+        if (yearFilter != 0 && car->getYear() != yearFilter)
+            matches = false;
+
+        if (matches) {
+            car->print();
+            found = true;
+        }
+    }
+
+    if (!found)
+        cout << "Нічого не знайдено за заданими критеріями.\n";
 }

@@ -52,7 +52,8 @@ int main() {
                 cout << "5. Редагувати авто\n";         
                 cout << "6. Видалити авто\n";           
                 cout << "7. Змінити користувача\n";
-                cout << "8. Вийти з програми\n";
+                cout << "8. Пошук авто за критеріями\n";
+                cout << "9. Вийти з програми\n";
                 cout << "Ваш вибір: ";
                 int choice;
                 cin >> choice;
@@ -66,7 +67,9 @@ int main() {
                     case 5: manager.editCar(); break;  
                     case 6: manager.deleteCar(); break;   
                     case 7: activeSession = false; break;
-                    case 8: manager.saveToFile("cars.csv"); return 0;
+                    case 8: manager.searchCars(); break;
+                    case 9: manager.saveToFile("cars.csv"); return 0;
+
                     default: cout << "Невірний вибір.\n"; break;
                 } 
             }

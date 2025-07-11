@@ -20,6 +20,7 @@ public:
     void averagePriceInPeriod() const;
     void editCar();
     void deleteCar();
+    void searchCars() const;
 
 };
 
