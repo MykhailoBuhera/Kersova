@@ -21,6 +21,8 @@ public:
     void editCar();
     void deleteCar();
     void searchCars() const;
+    void sortByPrice(bool ascending = true);
+    void sortByYear(bool ascending = true);
 
 };
 

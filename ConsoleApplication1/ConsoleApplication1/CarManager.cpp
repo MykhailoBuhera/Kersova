@@ -6,6 +6,7 @@
 #include <cctype>// for lower
 using namespace std;
 
+
 string toLower(const string& str) {
     string result = str;
     transform(result.begin(), result.end(), result.begin(),
@@ -22,12 +23,14 @@ void CarManager::loadFromFile(const string& filename) {
     }
 }
 
+
 void CarManager::saveToFile(const string& filename) {
     ofstream file(filename);
     for (const auto& car : cars) {
         file << car->toCSV() << '\n';
     }
 }
+
 
 void CarManager::addCar() {
     string brand, color;
@@ -47,10 +50,12 @@ void CarManager::addCar() {
     cout << "Авто додано.\n";
 }
 
+
 void CarManager::showAllCars() const {
     cout << "\n--- Всі автомобілі ---\n";
     for (const auto& car : cars) car->print();
 }
+
 
 void CarManager::findMostEconomicalCar() const {
     if (cars.empty()) {
@@ -65,6 +70,7 @@ void CarManager::findMostEconomicalCar() const {
     cout << "\nНайекономічніший автомобіль:\n";
     (*best)->print();
 }
+
 
 void CarManager::averagePriceInPeriod() const {
     int start, end;
@@ -85,6 +91,8 @@ void CarManager::averagePriceInPeriod() const {
     else
         cout << "Середня ціна: " << (sum / count) << " грн\n";
 }
+
+
 void CarManager::editCar() {
     if (cars.empty()) {
         cout << "Список порожній.\n";
@@ -118,6 +126,7 @@ void CarManager::editCar() {
     cout << "Авто оновлено.\n";
 }
 
+
 void CarManager::deleteCar() {
     if (cars.empty()) {
         cout << "Список порожній.\n";
@@ -137,6 +146,8 @@ void CarManager::deleteCar() {
     cars.erase(cars.begin() + index);
     cout << "Авто видалено.\n";
 }
+
+
 void CarManager::searchCars() const {
     if (cars.empty()) {
         cout << "База порожня.\n";
@@ -181,5 +192,34 @@ void CarManager::searchCars() const {
 
     if (!found)
         cout << "Нічого не знайдено за заданими критеріями.\n";
+}
+
+
+void CarManager::sortByPrice(bool ascending) {
+    if (cars.empty()) {
+        cout << "Список порожній.\n";
+        return;
+    }
+
+    sort(cars.begin(), cars.end(), [ascending](const auto& a, const auto& b) {
+        return ascending ? a->getPrice() < b->getPrice()
+            : a->getPrice() > b->getPrice();
+        });
+
+    cout << "Список відсортовано за ціною (" << (ascending ? "зростання" : "спадання") << ").\n";
+}
+
+void CarManager::sortByYear(bool ascending) {
+    if (cars.empty()) {
+        cout << "Список порожній.\n";
+        return;
+    }
+
+    sort(cars.begin(), cars.end(), [ascending](const auto& a, const auto& b) {
+        return ascending ? a->getYear() < b->getYear()
+            : a->getYear() > b->getYear();
+        });
+
+    cout << "Список відсортовано за роком (" << (ascending ? "зростання" : "спадання") << ").\n";
 }
 

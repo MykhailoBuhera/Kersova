@@ -2,6 +2,7 @@
 #include "AuthManager.h"
 #include <windows.h>
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 int main() {
     SetConsoleCP(1251);
@@ -22,6 +23,8 @@ int main() {
 
         while (activeSession) {
             if (auth.isAdmin()) {
+                system("cls");
+                cout << "Вітаємо вас адміністраторе\n";
                 cout << "\n--- Меню адміністратора ---\n";
                 cout << "1. Додати користувача\n";
                 cout << "2. Видалити користувача\n";
@@ -37,7 +40,7 @@ int main() {
                 case 1: auth.addUser(); break;
                 case 2: auth.deleteUser(); break;
                 case 3: auth.listUsers(); break;
-                case 4: goto car_menu; // так, це прийнятно тут
+                case 4: goto car_menu;
                 case 5: activeSession = false; break; // змінити користувача
                 case 6: manager.saveToFile("cars.csv"); return 0;
                 default: cout << "Невірний вибір.\n"; break;
@@ -53,7 +56,11 @@ int main() {
                 cout << "6. Видалити авто\n";           
                 cout << "7. Змінити користувача\n";
                 cout << "8. Пошук авто за критеріями\n";
-                cout << "9. Вийти з програми\n";
+                cout << "9. Сортувати за ціною (зростання)\n";
+                cout << "10. Сортувати за ціною (спадання)\n";
+                cout << "11. Сортувати за роком (зростання)\n";
+                cout << "12. Сортувати за роком (спадання)\n";
+                cout << "13. Вийти з програми\n";
                 cout << "Ваш вибір: ";
                 int choice;
                 cin >> choice;
@@ -68,7 +75,11 @@ int main() {
                     case 6: manager.deleteCar(); break;   
                     case 7: activeSession = false; break;
                     case 8: manager.searchCars(); break;
-                    case 9: manager.saveToFile("cars.csv"); return 0;
+                    case 9: manager.sortByPrice(true); break;
+                    case 10: manager.sortByPrice(false); break;
+                    case 11: manager.sortByYear(true); break;
+                    case 12: manager.sortByYear(false); break;
+                    case 13: manager.saveToFile("cars.csv"); return 0;
 
                     default: cout << "Невірний вибір.\n"; break;
                 } 

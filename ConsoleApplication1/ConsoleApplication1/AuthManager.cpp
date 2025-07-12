@@ -46,7 +46,6 @@ bool AuthManager::login() {
     auto it = users.find(username);
     if (it != users.end() && it->second == password) {
         currentUser = username;
-        cout << "Óñï³øíèé âõ³ä.\n";
         return true;
     }
     else {
