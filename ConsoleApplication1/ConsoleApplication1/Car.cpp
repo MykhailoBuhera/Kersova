@@ -1,34 +1,43 @@
 #include "Car.h"
 using namespace std;
+
 Car::Car()
-    : Vehicle(), model("Unknown"), fuelConsumption(0.0), doorCount(0) {
+    : Vehicle(), model("Unknown"), fuelConsumption(0.0), doorCount(0), config() {
     cout << "[Car] Конструктор за замовчуванням\n";
 }
 
-// Додано новий конструктор з параметром моделі
-Car::Car(const string& b, const string& c, const string& m, double fuel, int doors, int y, double p, const Configuration& config)
-    : Vehicle(b, c, y, p, m), model(m), fuelConsumption(fuel), doorCount(doors) {
+Car::Car(const string& b, const string& c, const string& m,
+    double fuel, int doors, int y, double p, const Configuration& cfg)
+    : Vehicle(b, c, y, p, m),
+    model(m),
+    fuelConsumption(fuel),
+    doorCount(doors),
+    config(cfg) {
     cout << "[Car] Конструктор з параметрами: " << brand << " " << model << endl;
 }
 
 Car::Car(const Car& other)
-    : Vehicle(other), model(other.model),
-    fuelConsumption(other.fuelConsumption), doorCount(other.doorCount) {
+    : Vehicle(other),
+    model(other.model),
+    fuelConsumption(other.fuelConsumption),
+    doorCount(other.doorCount),
+    config(other.config) {
     cout << "[Car] Копіювальний конструктор: " << brand << " " << model << endl;
 }
 
 Car::Car(Car&& other) noexcept
-    : Vehicle(move(other)), model(std::move(other.model)),
-    fuelConsumption(other.fuelConsumption), doorCount(other.doorCount) {
+    : Vehicle(move(other)),
+    model(std::move(other.model)),
+    fuelConsumption(other.fuelConsumption),
+    doorCount(other.doorCount),
+    config(std::move(other.config)) {
     cout << "[Car] Переміщувальний конструктор: " << brand << " " << model << endl;
 }
 
-// === Деструктор ===
 Car::~Car() {
     cout << "[Car] Знищено: " << brand << " " << model << endl;
 }
 
-// === print() — додали вивід моделі ===
 void Car::print() const {
     cout << "Марка: " << brand
         << ", Модель: " << model
@@ -37,35 +46,42 @@ void Car::print() const {
         << ", Кількість дверей: " << doorCount
         << ", Рік: " << year
         << ", Ціна: " << price << " грн" << endl;
-        config.print();
-}
-
-// === CSV — вставили model між color і fuel ===
-string Car::toCSV() const {
-    ostringstream oss;
-    oss << brand << "," << color << "," << getModel() << ","
-        << fuelConsumption << ","
-        << doorCount << ","
-        << year << ","
-        << price;
-    return oss.str();
+    config.print();
 }
 
 Car Car::fromCSV(const string& line) {
     istringstream iss(line);
-    string b, c, m;
-    double f, p;
-    int d, y;
+    string brand, color, model;
+    double fuelConsumption, price;
+    int doorCount, year;
 
-    getline(iss, b, ',');     // brand
-    getline(iss, c, ',');     // color
-    getline(iss, m, ',');     // model  <— НОВЕ
-    iss >> f; iss.ignore();   // fuelConsumption
-    iss >> d; iss.ignore();   // doorCount
-    iss >> y; iss.ignore();   // year
-    iss >> p;                 // price
-	Configuration config;
-    return Car(b, c, m, f, d, y, p, config);
+    getline(iss, brand, ',');
+    getline(iss, color, ',');
+    getline(iss, model, ',');
+    iss >> fuelConsumption; iss.ignore();
+    iss >> doorCount; iss.ignore();
+    iss >> year; iss.ignore();
+    iss >> price;
+
+    if (iss.peek() == ',') iss.get(); // пропускаємо кому
+    string configData;
+    getline(iss, configData);
+
+    Configuration cfg;
+    if (!configData.empty()) {
+        cfg = Configuration::fromCSV(configData);
+    }
+
+    return Car(brand, color, model, fuelConsumption, doorCount, year, price, cfg);
+}
+
+string Car::toCSV() const {
+    ostringstream oss;
+    oss << brand << "," << color << "," << model << ","
+        << fuelConsumption << "," << doorCount << ","
+        << year << "," << price << ","
+        << config.toCSV();
+    return oss.str();
 }
 
 // Getters
@@ -76,7 +92,6 @@ int Car::getDoorCount() const { return doorCount; }
 void Car::setFuelConsumption(double f) { fuelConsumption = f; }
 void Car::setDoorCount(int d) { doorCount = d; }
 
-// Методи предметної області
 bool Car::isEconomical(double limit) const { return fuelConsumption < limit; }
 bool Car::isFamilyCar() const { return doorCount >= 4; }
 bool Car::compareByFuel(const Car& other) const { return fuelConsumption < other.fuelConsumption; }
@@ -90,5 +105,6 @@ int Car::getAge() const {
     int currentYear = 1900 + ltm.tm_year;
     return currentYear - year;
 }
+
 string Car::getModel() const { return model; }
 void Car::setModel(const string& m) { model = m; }

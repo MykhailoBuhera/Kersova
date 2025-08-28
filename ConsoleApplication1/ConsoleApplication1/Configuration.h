@@ -6,6 +6,8 @@
 
 class Configuration : public Vehicle, public IPrintable {
 public:
+    Configuration& operator=(const Configuration& other);
+
     // Конструктор за замовчуванням
     Configuration();
 

@@ -46,3 +46,15 @@ bool Vehicle::isBrand(const string& b) const { return brand == b; }
 string Vehicle::getModel() const {
     return model;
 }
+
+Vehicle& Vehicle::operator=(const Vehicle& other) {
+       if (this != &other) {
+           brand = other.brand;
+           model = other.model;
+           color = other.color;
+           year = other.year;
+           price = other.price;
+       }
+       return *this;
+   }
+

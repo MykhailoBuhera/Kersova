@@ -68,6 +68,7 @@ void CarManager::addCar() {
 
     cars.push_back(make_shared<Car>(brand, color, model, fuel, doors, year, price, config));
     cout << "? Авто додано!\n";
+	saveToFile("cars.csv");
 }
 
 void CarManager::showAllCars() const {
@@ -116,6 +117,7 @@ void CarManager::editCar() {
 
         cars[index] = make_shared<Car>(brand, color, model, fuel, doors, year, price, config);
         cout << "? Авто оновлено!\n";
+        saveToFile("cars.csv");
     }
     else {
         cout << "? Невірний індекс!\n";

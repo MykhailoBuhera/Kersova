@@ -5,6 +5,7 @@ using namespace std;
 
 class Vehicle {
 public:
+	Vehicle& operator=(const Vehicle& other);
     // Конструктори
     Vehicle();
     Vehicle(const string& b, const string& c, int y, double p, const string& m);

@@ -1,37 +1,50 @@
 #include "Configuration.h"
-#include "Car.h"
 #include <sstream>
 
 // Конструктор за замовчуванням
 Configuration::Configuration()
-    : Vehicle("Unknown", "Unknown", 0, 0.0, ""), packageName("Basic"),
-      hasAirConditioner(false), hasMultimedia(false), hasSafetySystem(false), price(0.0) {
+    : Vehicle("Unknown", "", 0, 0.0, "Unknown"),
+    packageName("Basic"),
+    hasAirConditioner(false),
+    hasMultimedia(false),
+    hasSafetySystem(false),
+    price(0.0) {
 }
 
 // Конструктор з параметрами
 Configuration::Configuration(const std::string& brand, const std::string& model,
     const std::string& packageName, bool ac, bool multimedia, bool safety, double price)
-    : Vehicle(brand, model, 0, 0.0,""), packageName(packageName),
-    hasAirConditioner(ac), hasMultimedia(multimedia), hasSafetySystem(safety), price(price) {
+    : Vehicle(brand, "", 0, 0.0, model),
+    packageName(packageName),
+    hasAirConditioner(ac),
+    hasMultimedia(multimedia),
+    hasSafetySystem(safety),
+    price(price) {
 }
 
 // Конструктор копіювання
 Configuration::Configuration(const Configuration& other)
-    : Vehicle(other), packageName(other.packageName),
-    hasAirConditioner(other.hasAirConditioner), hasMultimedia(other.hasMultimedia),
-    hasSafetySystem(other.hasSafetySystem), price(other.price) {
+    : Vehicle(other),
+    packageName(other.packageName),
+    hasAirConditioner(other.hasAirConditioner),
+    hasMultimedia(other.hasMultimedia),
+    hasSafetySystem(other.hasSafetySystem),
+    price(other.price) {
 }
 
 // Конструктор переміщення
 Configuration::Configuration(Configuration&& other) noexcept
-    : Vehicle(std::move(other)), packageName(std::move(other.packageName)),
-    hasAirConditioner(other.hasAirConditioner), hasMultimedia(other.hasMultimedia),
-    hasSafetySystem(other.hasSafetySystem), price(other.price) {
+    : Vehicle(std::move(other)),
+    packageName(std::move(other.packageName)),
+    hasAirConditioner(other.hasAirConditioner),
+    hasMultimedia(other.hasMultimedia),
+    hasSafetySystem(other.hasSafetySystem),
+    price(other.price) {
 }
 
 // Деструктор
 Configuration::~Configuration() {
-    std::cout << "Configuration destroyed: \n " << packageName;
+    std::cout << "Configuration destroyed: " << packageName << std::endl;
 }
 
 // Get/Set
@@ -53,34 +66,45 @@ void Configuration::toggleSafety() { hasSafetySystem = !hasSafetySystem; }
 // Вивід інформації
 void Configuration::print() const {
     std::cout << "Configuration: " << packageName
-        << " | Car: " << getBrand() << " " << getModel()
         << " | AC: " << (hasAirConditioner ? "Yes" : "No")
         << " | Multimedia: " << (hasMultimedia ? "Yes" : "No")
         << " | Safety: " << (hasSafetySystem ? "Yes" : "No")
         << " | Price: " << price << std::endl;
 }
 
-// CSV збереження
 std::string Configuration::toCSV() const {
-    return getBrand() + "," + getModel() + "," + packageName + "," +
-        (hasAirConditioner ? "1" : "0") + "," +
-        (hasMultimedia ? "1" : "0") + "," +
-        (hasSafetySystem ? "1" : "0") + "," +
-        std::to_string(price);
+    std::ostringstream oss;
+    oss << packageName << ","
+        << hasAirConditioner << ","
+        << hasMultimedia << ","
+        << hasSafetySystem << ","
+        << price;
+    return oss.str();
 }
 
-// CSV читання
 Configuration Configuration::fromCSV(const std::string& line) {
-    std::stringstream ss(line);
-    std::string brand, model, pkg, acStr, mmStr, safetyStr, priceStr;
+    std::istringstream iss(line);
+    std::string packageName;
+    bool hasAirConditioner, hasMultimedia, hasSafetySystem;
+    double price;
 
-    std::getline(ss, brand, ',');
-    std::getline(ss, model, ',');
-    std::getline(ss, pkg, ',');
-    std::getline(ss, acStr, ',');
-    std::getline(ss, mmStr, ',');
-    std::getline(ss, safetyStr, ',');
-    std::getline(ss, priceStr, ',');
+    getline(iss, packageName, ',');
+    iss >> hasAirConditioner; iss.ignore();
+    iss >> hasMultimedia; iss.ignore();
+    iss >> hasSafetySystem; iss.ignore();
+    iss >> price;
 
-    return Configuration(brand, model, pkg, acStr == "1", mmStr == "1", safetyStr == "1", std::stod(priceStr));
+    return Configuration("Unknown", "Unknown", packageName, hasAirConditioner, hasMultimedia, hasSafetySystem, price);
+}
+
+Configuration& Configuration::operator=(const Configuration& other) {
+    if (this != &other) {
+        Vehicle::operator=(other); // Call base class assignment
+        packageName = other.packageName;
+        hasAirConditioner = other.hasAirConditioner;
+        hasMultimedia = other.hasMultimedia;
+        hasSafetySystem = other.hasSafetySystem;
+        price = other.price;
+    }
+    return *this;
 }
