@@ -4,13 +4,6 @@
 using namespace std;
 
 class Vehicle {
-protected:
-    string brand;
-    string model;
-    string color;
-    int year;
-    double price;
-
 public:
     // Конструктори
     Vehicle();
@@ -45,4 +38,12 @@ public:
 
     virtual void print() const = 0;
     virtual string toCSV() const = 0;
+
+protected:
+    string brand;
+    string model;
+    string color;
+    int year;
+    double price;
+
 };

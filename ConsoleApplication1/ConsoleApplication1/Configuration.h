@@ -5,13 +5,6 @@
 #include <iostream>
 
 class Configuration : public Vehicle, public IPrintable {
-private:
-    std::string packageName;   // Назва комплектації (Basic, Comfort, Premium)
-    bool hasAirConditioner;
-    bool hasMultimedia;
-    bool hasSafetySystem;
-    double price;
-
 public:
     // Конструктор за замовчуванням
     Configuration();
@@ -46,4 +39,11 @@ public:
     void print() const override;
     std::string toCSV() const override;
     static Configuration fromCSV(const std::string& line);
+private:
+    std::string packageName;   // Назва комплектації (Basic, Comfort, Premium)
+    bool hasAirConditioner;
+    bool hasMultimedia;
+    bool hasSafetySystem;
+    double price;
+
 };

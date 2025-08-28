@@ -8,11 +8,6 @@
 using namespace std;
 
 class CarManager {
-private:
-    vector<shared_ptr<Car>> cars;
-
-    void printCarIndexList() const;
-
 public:
     // --- CRUD ---
     void loadFromFile(const string& filename);
@@ -48,4 +43,9 @@ public:
     // --- Сервісний метод ---
     void showHelp() const;
     void showHelpnotadm() const;
+
+private:
+    vector<shared_ptr<Car>> cars;
+
+    void printCarIndexList() const;
 };

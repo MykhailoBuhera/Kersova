@@ -4,12 +4,6 @@
 #include "Configuration.h"
 
 class Car : public Vehicle {
-private:
-    Configuration config;
-    double fuelConsumption;
-    int doorCount;
-    std::string model;
-
 public:
     // Конструктори
     Car();
@@ -35,6 +29,7 @@ public:
     bool isNewerThan(int y) const;               // Чи новіший за рік
     double costPer100km(double fuelPrice) const; // Вартість поїздки на 100 км
     int getAge() const;
+
     // Реалізація абстрактних методів
     void print() const override;
     string toCSV() const override;
@@ -42,4 +37,11 @@ public:
     void setModel(const std::string& m);
 
     static Car fromCSV(const string& line);
+
+private:
+    Configuration config;
+    double fuelConsumption;
+    int doorCount;
+    std::string model;
+
 };
