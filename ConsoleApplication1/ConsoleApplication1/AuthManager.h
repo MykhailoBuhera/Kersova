@@ -1,20 +1,22 @@
-#ifndef AUTHMANAGER_H
-#define AUTHMANAGER_H
-
+#pragma once
+#include <vector>
 #include <string>
 #include <unordered_map>
-using namespace std;
 
 class AuthManager {
 private:
-    unordered_map< string, string> users;
-    string currentUser;
-    const string filename = "users.txt";
+    std::string filename = "users.txt";
+    std::unordered_map<std::string, std::string> users;
+    std::string currentUser;
     int deleteAttempts = 0;
 
 
 public:
     AuthManager();
+    AuthManager(const std::vector<std::string>& users);
+    AuthManager(const AuthManager& other);
+    AuthManager(AuthManager&& other) noexcept;
+    ~AuthManager();
 
     void loadUsers();
     void saveUsers();
@@ -22,12 +24,10 @@ public:
     bool login();
     bool isAdmin() const;
     bool reauthenticate();
-    string getCurrentUser() const;
+    std::string getCurrentUser() const;
 
     // admin-only
     void addUser();
     void deleteUser();
     void listUsers();
 };
-
-#endif
