@@ -32,7 +32,7 @@ public:
 
     // Реалізація абстрактних методів
     void print() const override;
-    string toCSV() const override;
+    std::string toCSV() const override;
     std::string getModel() const;
     void setModel(const std::string& m);
 

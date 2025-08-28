@@ -1,4 +1,5 @@
 #include "Car.h"
+using namespace std;
 Car::Car()
     : Vehicle(), model("Unknown"), fuelConsumption(0.0), doorCount(0) {
     cout << "[Car] Конструктор за замовчуванням\n";
@@ -89,5 +90,5 @@ int Car::getAge() const {
     int currentYear = 1900 + ltm.tm_year;
     return currentYear - year;
 }
-std::string Car::getModel() const { return model; }
-void Car::setModel(const std::string& m) { model = m; }
+string Car::getModel() const { return model; }
+void Car::setModel(const string& m) { model = m; }

@@ -8,12 +8,6 @@ Configuration::Configuration()
       hasAirConditioner(false), hasMultimedia(false), hasSafetySystem(false), price(0.0) {
 }
 
-
-/*Configuration::Configuration()
-    : Vehicle model("Unknown"), packageName("Basic"),
-    hasAirConditioner(false), hasMultimedia(false), hasSafetySystem(false), price(0.0) {
-}*/
-
 // Конструктор з параметрами
 Configuration::Configuration(const std::string& brand, const std::string& model,
     const std::string& packageName, bool ac, bool multimedia, bool safety, double price)
@@ -37,7 +31,7 @@ Configuration::Configuration(Configuration&& other) noexcept
 
 // Деструктор
 Configuration::~Configuration() {
-    std::cout << "Configuration destroyed: " << packageName << std::endl;
+    std::cout << "Configuration destroyed: \n " << packageName;
 }
 
 // Get/Set

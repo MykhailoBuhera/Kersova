@@ -54,7 +54,7 @@ void CarManager::addCar() {
     cout << "Рік випуску: "; cin >> year;
     cout << "Ціна: "; cin >> price;
 
-    std::string packageName;
+    string packageName;
     bool hasAC, hasMultimedia, hasSafety;
     double configPrice;
     cin.ignore(); // Очищаємо буфер після попереднього cin
@@ -100,9 +100,9 @@ void CarManager::editCar() {
         cout << "Нова ціна: "; cin >> price;
 
 		double configPrice;
-        std::string packageName;
+        string packageName;
         bool hasAC, hasMultimedia, hasSafety;
-        cin.ignore(); // Очищаємо буфер після попереднього cin
+        cin.ignore();
         cout << "Package name: "; getline(cin, packageName);
         cout << "Has air conditioner (1/0): "; cin >> hasAC;
         cout << "Has multimedia (1/0): "; cin >> hasMultimedia;
